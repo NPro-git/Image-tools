@@ -2,15 +2,8 @@
 import os
 import json
 
-json_dir = '/home/jinling/Documents/data/picked_hands/thick_strap'
-frm_json_dirs = ['/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/p0_batches/annotations/devebec/batch_p0_04_09AUG_devebec',
-            '/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/p0_batches/annotations/devebec/batch_p0_05_02NOV2023_devebec/Lableme Json',
-'/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/p0_batches/annotations/devebec/batch_p0_05_24AUG_devebec',
-            '/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/p0_batches/annotations/devebec/batch_p0_06_31OCT2023_devebec/LabelMe_2/',
-'/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/p0_batches/annotations/devebec/batch_p0_06_31OCT2023_devebec/Lableme_1/',
-'/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/p0_batches/annotations/devebec/batch_p0_06_31OCT2023_devebec/LableMe/',
-'/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/p0_batches/annotations/devebec/batch_p0_06_31OCT2023_devebec/LableMe_3/',
-'/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/p0_batches/annotations/devebec/batch_p0_09_30OCT2023_devebec/Annotation_batch_p0_09_30OCT2023_devebec',
+json_dir = '/home/jinling/Documents/data/Buckets/EP01/10b-capture-backup/ALLLEDs/annotations/good_samples/picked_large_annotation_polished'
+frm_json_dirs = ['/home/jinling/Documents/data/Buckets/EP01/10b-capture-backup/ALLLEDs/annotations/good_samples/picked_polished'
                  ]
 
 json_files = [file for file in os.listdir(json_dir) if '.json' in file]
@@ -43,7 +36,7 @@ for json_file in json_files:
     frm_data = json.load(open(frm_path, encoding='gbk'))
     for idx in range(len(frm_data['shapes'])):
         label = frm_data['shapes'][idx]['label']
-        if label != 'N':
+        if label != 'nail':
             continue
         shape = frm_data['shapes'][idx]
         shape['label'] = 'nail'

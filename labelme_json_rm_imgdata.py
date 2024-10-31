@@ -4,8 +4,8 @@
 import os
 import json
 
-src_dir = '/home/jinling/Documents/data/picked_hands/edited_json_files_tobedeleted/'
-dst_dir = '/home/jinling/Documents/data/picked_hands/edited_json_files_tobedeleted'
+src_dir = '/home/jinling/Documents/data/Buckets/EP01/10b-capture-backup/ALLLEDs/hands_EPxx_download_20240921/annotating/annotated'
+dst_dir = '/home/jinling/Documents/data/Buckets/EP01/10b-capture-backup/ALLLEDs/hands_EPxx_download_20240921/annotating/annotated'
 #src_dir = '/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/raw_naive_hdr_only/images'
 #dst_dir = '/home/jinling/Documents/data/Buckets/deep-learning-datasets-10b/fingers-segmentation/raw_naive_hdr_only/images'
 

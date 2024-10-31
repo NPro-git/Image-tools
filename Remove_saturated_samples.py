@@ -2,11 +2,15 @@
 import os
 import numpy as np
 import cv2
-
+'''
 frm_dir = '/home/jinling/Documents/data/full-seg-datasets/fingers_p0_v4.12_natural_polish_ALLs_HDRs/natural_1'
 to_dir = '/home/jinling/Documents/data/full-seg-datasets/fingers_p0_v4.13_natural_polish_ALLs_NoSaturate/natural_1'
 saturation_dir = '/home/jinling/Documents/data/full-seg-datasets/fingers_p0_v4.13_natural_polish_ALLs_NoSaturate/saturation'
-img_frm_dir = os.path.join(frm_dir, 'alls')
+'''
+img_frm_dir = '/home/jinling/Documents/data/full-seg-datasets/models_performance/all_masks/images'
+mask_frm_dir = '/home/jinling/Documents/data/full-seg-datasets/models_performance/all_masks/masks'
+unsaturated_dir = '/home/jinling/Documents/data/full-seg-datasets/models_performance/all_masks_unsaturated'
+saturated_dir = '/home/jinling/Documents/data/full-seg-datasets/models_performance/all_masks_saturated'
 
 files = [file for file in os.listdir(img_frm_dir) if '.png' in file]
 
@@ -18,7 +22,7 @@ ratio_th = 0.1
 for file in files:
     img_path = os.path.join(img_frm_dir, file)
     img = cv2.imread(img_path)
-    mask_path = os.path.join(frm_dir, 'masks', file)
+    mask_path = os.path.join(mask_frm_dir, file)
     mask = cv2.imread(mask_path)
     #mask[np.where(np.all(mask==np.array([2,2,2], dtype=np.uint8)))] = nail_color
     mask[np.where((mask == [2, 2, 2]).all(axis=-1))] = nail_color
@@ -32,30 +36,30 @@ for file in files:
     circle_img[np.where(circle<128)] = 0
     sature_img = np.zeros(mask.shape[:2], dtype=np.uint8)
     circle_points = np.where(circle>128)
-    sature_points = np.where((circle_img>240).all(axis=-1))
+    sature_points = np.where((circle_img>220).all(axis=-1))
     sature_img[circle_points] = 128
     sature_img[sature_points] = 255
     sature_img = np.concatenate([sature_img.reshape(sature_img.shape+(1,))]*3, axis=-1)
     show_img = np.concatenate((img, circle_img, sature_img), axis=1)
     ratio = len(sature_points[0])/(1+len(circle_points[0]))
     if ratio < ratio_th:
-        command = 'cp ' + img_path + ' ' + os.path.join(to_dir, 'alls')
+        command = 'cp ' + img_path + ' ' + os.path.join(unsaturated_dir, 'alls')
         print(command)
-        #os.system(command)
-        command = 'cp ' + mask_path + ' ' + os.path.join(to_dir, 'masks')
+        os.system(command)
+        command = 'cp ' + mask_path + ' ' + os.path.join(unsaturated_dir, 'masks')
         print(command)
-        #os.system(command)
+        os.system(command)
     else:
-        command = 'cp ' + img_path + ' ' + os.path.join(saturation_dir, 'alls')
+        command = 'cp ' + img_path + ' ' + os.path.join(saturated_dir, 'alls')
         print(command)
-        #os.system(command)
-        command = 'cp ' + mask_path + ' ' + os.path.join(saturation_dir, 'masks')
+        os.system(command)
+        command = 'cp ' + mask_path + ' ' + os.path.join(saturated_dir, 'masks')
         print(command)
-        #os.system(command)
+        os.system(command)
 
     print(ratio)
-    cv2.imshow('show_img', show_img)
-    cv2.waitKey(0)
+    #cv2.imshow('show_img', show_img)
+    #cv2.waitKey(0)
     print(file)
 
 
